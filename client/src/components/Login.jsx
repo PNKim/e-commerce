@@ -1,28 +1,24 @@
 import { useState } from "react";
 import Register from "./Register";
+import { useAuth } from "../authentication/auth";
 
-function Login(props) {
+function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [seenRegister, setSeenRegister] = useState(false);
-  const toggleLogin = props.toggle;
 
-  const toggleRegister = () => {
-    setSeenRegister(!seenRegister);
-  };
+  const { login, buttonLogin, buttonRegister, seenRegister } = useAuth();
 
   return (
-    <div className="w-full h-full p-5 flex flex-col justify-center items-center absolute z-10 gap-20">
-      {seenRegister ? (
-        <Register toggleRegister={toggleRegister} toggleLogin={toggleLogin} />
-      ) : null}
+    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-10 gap-20">
+      {seenRegister ? <Register /> : null}
       <span className="w-[50%] h-[80%] bg-white absolute z-3"></span>
       <h2 className="relative z-4">Login</h2>
       <form
         className="flex flex-col gap-20"
         onSubmit={(e) => {
           e.preventDefault();
-          toggleLogin();
+          const data = { username, password };
+          login(data);
         }}
       >
         <input
@@ -50,7 +46,7 @@ function Login(props) {
           <button
             className="w-[40%] p-5 text-xl bg-gray-400 relative text-center z-4"
             type="button"
-            onClick={toggleRegister}
+            onClick={buttonRegister}
           >
             Register
           </button>
@@ -59,7 +55,7 @@ function Login(props) {
       <button
         className="p-2 bg-gray-200 absolute top-[11%] right-[26%] z-4"
         type="button"
-        onClick={toggleLogin}
+        onClick={buttonLogin}
       >
         X
       </button>
@@ -67,4 +63,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default LoginPage;

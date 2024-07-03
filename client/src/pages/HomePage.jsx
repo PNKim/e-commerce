@@ -1,27 +1,22 @@
-import GetDataHomePage from "../dataFromServer/GetDataHomePage";
-import Login from "./Login";
-import { useState } from "react";
-
+import MainHomePage from "../components/MainHomePage";
+import Header from "../components/Header";
+import { useAuth } from "../authentication/auth";
 function HomePage() {
-  const [seenLogin, setSeenLogin] = useState(false);
-
-  const toggleLogin = () => {
-    setSeenLogin(!seenLogin);
-  };
+  const { seenLogin } = useAuth();
 
   return (
-    <div className="w-full h-screen box-border m-0 p-0 flex flex-col relative">
-      {seenLogin ? <Login toggle={toggleLogin} /> : null}
-      <section className={seenLogin ? "opacity-30 z-1 h-full" : "z-1 h-full"}>
-        <header className="w-full p-8 bg-gray-700 text-white text-2xl flex justify-between">
-          <h1>KimShop</h1>
-          <button onClick={toggleLogin}>Login</button>
-        </header>
-        <main className="my-5 h-[80%] flex flex-col items-center">
-          <GetDataHomePage />
-        </main>
+    <div className="flex flex-col items-center">
+      <Header />
+      <div
+        className={
+          seenLogin
+            ? "flex flex-col items-center opacity-30 z-1 "
+            : "flex flex-col items-center z-1"
+        }
+      >
+        <MainHomePage />
         <footer className="h-[10%]">Contact</footer>
-      </section>
+      </div>
     </div>
   );
 }

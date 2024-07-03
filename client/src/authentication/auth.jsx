@@ -1,0 +1,97 @@
+import React, { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { useEffect } from "react";
+
+const AuthContext = React.createContext();
+
+function AuthProvider(props) {
+  // const navigate = useNavigate();
+  const token = localStorage.token;
+  let userDataFromToken;
+  if (token) {
+    userDataFromToken = jwtDecode(token);
+  }
+  const [state, setState] = useState({
+    loading: null,
+    error: null,
+    user: userDataFromToken,
+  });
+
+  const getdata = async () => {
+    try {
+      await axios.get("http://localhost:4000/user/us");
+    } catch (e) {
+      setIsToken(Boolean(window.localStorage.getItem("token")));
+    }
+  };
+
+  const [seenLogin, setSeenLogin] = useState(false);
+  const [seenRegister, setSeenRegister] = useState(false);
+  const [istoken, setIsToken] = useState(
+    Boolean(window.localStorage.getItem("token"))
+  );
+
+  const login = async (data) => {
+    try {
+      const Login = await axios.post("http://localhost:4000/user/login", data);
+      const token = Login.data.token;
+      localStorage.setItem("token", token);
+      const userDataFromToken = jwtDecode(token);
+      setState({ ...state, user: userDataFromToken });
+      setIsToken(Boolean(window.localStorage.getItem("token")));
+      buttonLogin();
+    } catch (e) {
+      alert("Invalid username or password");
+    }
+  };
+
+  const logout = () => {
+    window.localStorage.removeItem("token");
+    setIsToken(Boolean(window.localStorage.getItem("token")));
+  };
+
+  const register = async (data) => {
+    try {
+      await axios.post("http://localhost:4000/user/register", data);
+      buttonRegister();
+    } catch (e) {
+      alert("Please fill out all fields");
+    }
+  };
+
+  const buttonLogin = () => {
+    setSeenLogin(!seenLogin);
+  };
+
+  const buttonRegister = () => {
+    setSeenRegister(!seenRegister);
+  };
+
+  const isAuthenticated = Boolean(localStorage.getItem("token"));
+
+  return (
+    <AuthContext.Provider
+      value={{
+        state,
+        login,
+        logout,
+        register,
+        istoken,
+        buttonLogin,
+        buttonRegister,
+        seenLogin,
+        seenRegister,
+        isAuthenticated,
+        getdata,
+      }}
+    >
+      {props.children}
+    </AuthContext.Provider>
+  );
+}
+
+const useAuth = () => React.useContext(AuthContext);
+
+export { AuthProvider, useAuth };
