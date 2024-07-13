@@ -2,17 +2,50 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../components/Header";
+import { useAuth } from "../authentication/auth";
 
 function ProductPage() {
   const params = useParams();
+  const { checkToken } = useAuth();
   const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(0);
 
   const viewProductServer = async () => {
-    const data = await axios.get(
-      `http://localhost:4000/product/${params.productId}`
-    );
-    setProduct(data.data.product);
+    try {
+      const data = await axios.get(
+        `http://localhost:4000/product/${params.productId}`
+      );
+      setProduct(data.data.product.rows[0]);
+    } catch (e) {
+      alert("error connection from server");
+    }
+  };
+
+  const addToCart = async () => {
+    try {
+      await axios.post("http://localhost:4000/cart", {
+        product: product,
+        quantity: quantity,
+      });
+      setQuantity(0);
+      alert("add product to cart success");
+    } catch (e) {
+      alert("error connection from server");
+    }
+  };
+
+  const minus = () => {
+    let newQuantity = quantity;
+    newQuantity--;
+    if (newQuantity < 0) newQuantity = 0;
+    setQuantity(newQuantity);
+  };
+
+  const plus = () => {
+    let newQuantity = quantity;
+    newQuantity++;
+    if (newQuantity > product.quantity) newQuantity = product.quantity;
+    setQuantity(newQuantity);
   };
 
   useEffect(() => {
@@ -20,13 +53,37 @@ function ProductPage() {
   }, []);
 
   return (
-    <>
-      <Header />
-      <img src={product.image} alt={product.name} className="w-52 h-52" />
-      <p>{product.name}</p>
-      <p>{product.category}</p>
-      <p>{product.price}</p>
-    </>
+    <section className="h-screen mt-10 flex justify-center gap-10">
+      <div>
+        <img src={product.image} alt={product.name} className="w-72 h-72" />
+      </div>
+      <div className="flex flex-col">
+        <p>{product.name}</p>
+        <p>{product.category}</p>
+        <p>{product.price}</p>
+        <p>{product.quantity}</p>
+        <p className="flex-">{product.description}</p>
+        <span className="mt-2 self-end flex items-center text-xl gap-5">
+          <button type="button" onClick={minus}>
+            -
+          </button>
+          <span>{quantity}</span>
+          <button type="button" onClick={plus}>
+            +
+          </button>
+          <button
+            type="button"
+            className="btn btn-outline bg-blue-gray-600 text-white"
+            onClick={() => {
+              // checkToken();
+              // addToCart();
+            }}
+          >
+            add to cart
+          </button>
+        </span>
+      </div>
+    </section>
   );
 }
 

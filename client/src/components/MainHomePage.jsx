@@ -11,7 +11,7 @@ function MainHomePage() {
 
   const getData = async () => {
     const data = await axios.get("http://localhost:4000/product");
-    setGetProduct(data.data.product);
+    setGetProduct(data.data.product.rows);
   };
 
   useEffect(() => {
@@ -60,9 +60,9 @@ function MainHomePage() {
         {getProduct.map((product) => {
           return (
             <div
-              key={product.id}
+              key={product.product_id}
               onClick={() => {
-                navigate(`/product/${product.id - 1}/${product.name}`);
+                navigate(`/product/${product.product_id}/${product.name}`);
               }}
             >
               <img

@@ -1,12 +1,10 @@
 import MainHomePage from "../components/MainHomePage";
-import Header from "../components/Header";
 import { useAuth } from "../authentication/auth";
 function HomePage() {
   const { seenLogin } = useAuth();
 
   return (
     <div className="flex flex-col items-center">
-      <Header />
       <div
         className={
           seenLogin

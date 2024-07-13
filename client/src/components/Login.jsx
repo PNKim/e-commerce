@@ -25,7 +25,7 @@ function LoginPage() {
           type="text"
           value={username}
           placeholder="username"
-          className="w-96 text-center flex relative z-4"
+          className="w-96 text-center flex relative z-4 "
           onChange={(e) => setUsername(e.target.value)}
         />
 
@@ -38,13 +38,13 @@ function LoginPage() {
         />
         <div className="text-center flex justify-around">
           <button
-            className="w-[40%] p-5 text-xl bg-gray-400 relative text-center z-4"
+            className="w-[40%] text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
             type="submit"
           >
             Login
           </button>
           <button
-            className="w-[40%] p-5 text-xl bg-gray-400 relative text-center z-4"
+            className="w-[40%] text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
             type="button"
             onClick={buttonRegister}
           >

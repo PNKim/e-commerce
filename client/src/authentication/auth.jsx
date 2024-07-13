@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import { useEffect } from "react";
 
 const AuthContext = React.createContext();
 
 function AuthProvider(props) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const token = localStorage.token;
   let userDataFromToken;
   if (token) {
@@ -19,17 +18,9 @@ function AuthProvider(props) {
     user: userDataFromToken,
   });
 
-  const getdata = async () => {
-    try {
-      await axios.get("http://localhost:4000/user/us");
-    } catch (e) {
-      setIsToken(Boolean(window.localStorage.getItem("token")));
-    }
-  };
-
   const [seenLogin, setSeenLogin] = useState(false);
   const [seenRegister, setSeenRegister] = useState(false);
-  const [istoken, setIsToken] = useState(
+  const [isToken, setIsToken] = useState(
     Boolean(window.localStorage.getItem("token"))
   );
 
@@ -69,7 +60,15 @@ function AuthProvider(props) {
     setSeenRegister(!seenRegister);
   };
 
-  const isAuthenticated = Boolean(localStorage.getItem("token"));
+  const checkToken = async () => {
+    try {
+      await axios.get("http://localhost:4000/user/us");
+    } catch (e) {
+      setIsToken(Boolean(window.localStorage.getItem("token")));
+      alert("please Log-in again");
+      navigate("/");
+    }
+  };
 
   return (
     <AuthContext.Provider
@@ -78,13 +77,13 @@ function AuthProvider(props) {
         login,
         logout,
         register,
-        istoken,
+        isToken,
+        setIsToken,
         buttonLogin,
         buttonRegister,
         seenLogin,
         seenRegister,
-        isAuthenticated,
-        getdata,
+        checkToken,
       }}
     >
       {props.children}

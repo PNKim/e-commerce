@@ -5,13 +5,13 @@ import { useEffect } from "react";
 import { useAuth } from "./authentication/auth";
 
 function App() {
-  const { isAuthenticated } = useAuth();
+  const { isToken } = useAuth();
 
   useEffect(() => {
     document.title = "KimShop";
   }, []);
 
-  return isAuthenticated ? <AuthenticationApp /> : <UnAuthenticatedApp />;
+  return <>{isToken ? <AuthenticationApp /> : <UnAuthenticatedApp />}</>;
 }
 
 export default App;

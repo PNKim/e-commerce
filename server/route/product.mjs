@@ -1,5 +1,6 @@
 const product = [
   {
+    // Hello there! You will now be amongst the first to hear the details of our special events hosted at [business name]. Reply STOP to unsubscribe
     id: 1,
     name: "orange",
     image:

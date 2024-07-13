@@ -4,7 +4,7 @@ import { useAuth } from "../authentication/auth";
 
 function Header() {
   const navigate = useNavigate();
-  const { state, getdata, logout, istoken, buttonLogin, seenLogin } = useAuth();
+  const { state, logout, isToken, buttonLogin, seenLogin } = useAuth();
 
   return (
     <header className="w-full box-border m-0 p-0 relative">
@@ -25,11 +25,11 @@ function Header() {
           >
             KimShop
           </button>
-          {istoken ? (
+          {isToken ? (
             <div>
               <button
                 onClick={() => {
-                  getdata();
+                  // getdata();
                 }}
               >
                 {state.user.firstname}
@@ -44,7 +44,7 @@ function Header() {
               </button>
               <button
                 onClick={() => {
-                  navigate("/cart");
+                  navigate(`/cart/${state.user.id}`);
                 }}
               >
                 Cart
