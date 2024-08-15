@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Paganation";
+import { DebounceInput } from "react-debounce-input";
 
 function MainHomePage() {
   const [searchProduct, setSearchProduct] = useState("");
@@ -13,9 +14,11 @@ function MainHomePage() {
 
   const getData = async () => {
     console.log(import.meta.env.VITE_BACKEND_URL);
-    const data = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/product`);
+    const data = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/product?productName=${searchProduct}`
+    );
     console.log(data);
-    setGetProduct(data.data.product.rows);
+    setGetProduct(data.data.product);
   };
 
   const lastProduct = currentPage * productPerPage;
@@ -28,14 +31,15 @@ function MainHomePage() {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [searchProduct]);
 
   return (
     <main className="w-[80%] my-5 flex flex-col items-center gap-20 z-1">
       <div className="flex items-center gap-5">
         <label htmlFor="product">search product</label>
-        <input
+        <DebounceInput
           type="text"
+          debounceTimeout={300}
           placeholder="name product"
           className="my-5 bg-white text-black"
           value={searchProduct}
@@ -48,7 +52,7 @@ function MainHomePage() {
         {product.map((product) => {
           return (
             <button
-              className="p-2 w-full max-w-60 btn h-fit bg-blue-gray-200 text-black text-lg hover:bg-blue-gray-300 border-none flex flex-col"
+              className="p-2 w-full max-w-72 btn h-fit bg-blue-gray-200 text-black text-lg hover:bg-blue-gray-300 border-none flex flex-col"
               key={product.product_id}
               onClick={() => {
                 navigate(`/product/${product.product_id}/${product.name}`);
@@ -60,7 +64,11 @@ function MainHomePage() {
                 className="w-56 h-56"
               />
               <div className="w-full flex justify-evenly items-center">
-                <p className="flex-1">{product.name}</p>
+                <p className="flex-1">
+                  {product.name.length > 10
+                    ? product.name.slice(0, 10) + "..."
+                    : product.name}
+                </p>
                 <p className="flex-1">THB {product.price}</p>
               </div>
             </button>
