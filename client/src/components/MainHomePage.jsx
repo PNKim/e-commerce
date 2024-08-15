@@ -1,17 +1,29 @@
-import { Carousel } from "@material-tailwind/react";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Pagination from "./Paganation";
 
 function MainHomePage() {
   const [searchProduct, setSearchProduct] = useState("");
   const [getProduct, setGetProduct] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productPerPage] = useState(8);
   const navigate = useNavigate();
 
   const getData = async () => {
-    const data = await axios.get("http://localhost:4000/product");
+    console.log(import.meta.env.VITE_BACKEND_URL);
+    const data = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/product`);
+    console.log(data);
     setGetProduct(data.data.product.rows);
+  };
+
+  const lastProduct = currentPage * productPerPage;
+  const firstProduct = lastProduct - productPerPage;
+  const product = getProduct.slice(firstProduct, lastProduct);
+
+  const handlePagination = (item) => {
+    setCurrentPage(item);
   };
 
   useEffect(() => {
@@ -19,47 +31,24 @@ function MainHomePage() {
   }, []);
 
   return (
-    <main className="w-[80%] my-5 flex flex-col items-center">
-      <Carousel className="rounded-xl flex">
-        <div className="w-full flex gap-16 items-center">
-          <img
-            src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
-            alt="image 1"
-            className="w-[50%] object-contain"
-          />
-          <p>product 1</p>
-        </div>
-        <div className="w-full flex gap-16 items-center">
-          <img
-            src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
-            alt="image 2"
-            className="w-[50%] object-contain"
-          />
-          <p>product 2</p>
-        </div>
-
-        <div className="w-full flex gap-16 items-center">
-          <img
-            src="https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2762&q=80"
-            alt="image 3"
-            className="w-[50%] object-contain"
-          />
-          <p>product 3</p>
-        </div>
-      </Carousel>
-      <input
-        type="text"
-        placeholder="name product"
-        className="my-5"
-        value={searchProduct}
-        onChange={(e) => {
-          setSearchProduct(e.target.value);
-        }}
-      />
-      <div className="flex justify-center flex-wrap gap-20">
-        {getProduct.map((product) => {
+    <main className="w-[80%] my-5 flex flex-col items-center gap-20 z-1">
+      <div className="flex items-center gap-5">
+        <label htmlFor="product">search product</label>
+        <input
+          type="text"
+          placeholder="name product"
+          className="my-5 bg-white text-black"
+          value={searchProduct}
+          onChange={(e) => {
+            setSearchProduct(e.target.value);
+          }}
+        />
+      </div>
+      <div className="w-full flex justify-center flex-wrap gap-28">
+        {product.map((product) => {
           return (
-            <div
+            <button
+              className="p-2 w-full max-w-60 btn h-fit bg-blue-gray-200 text-black text-lg hover:bg-blue-gray-300 border-none flex flex-col"
               key={product.product_id}
               onClick={() => {
                 navigate(`/product/${product.product_id}/${product.name}`);
@@ -68,15 +57,21 @@ function MainHomePage() {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-52 h-52"
+                className="w-56 h-56"
               />
-              <p>{product.name}</p>
-              <p>{product.category}</p>
-              <p>{product.price}</p>
-            </div>
+              <div className="w-full flex justify-evenly items-center">
+                <p className="flex-1">{product.name}</p>
+                <p className="flex-1">THB {product.price}</p>
+              </div>
+            </button>
           );
         })}
       </div>
+      <Pagination
+        getProduct={getProduct}
+        productPerPage={productPerPage}
+        handlePagination={handlePagination}
+      />
     </main>
   );
 }

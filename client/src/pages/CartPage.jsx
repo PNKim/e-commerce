@@ -36,7 +36,7 @@ function CartPage() {
   }, []);
 
   return (
-    <section className="w-[80%] mt-10 flex flex-col items-center">
+    <section className="w-[80%] pt-40 flex flex-col items-center">
       <button onClick={checkToken} className="self-end">
         order
       </button>

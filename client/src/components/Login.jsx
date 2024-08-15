@@ -9,7 +9,7 @@ function LoginPage() {
   const { login, buttonLogin, buttonRegister, seenRegister } = useAuth();
 
   return (
-    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-10 gap-20">
+    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-20 gap-20">
       {seenRegister ? <Register /> : null}
       <span className="w-[50%] h-[80%] bg-white absolute z-3"></span>
       <h2 className="relative z-4">Login</h2>

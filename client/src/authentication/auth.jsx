@@ -26,7 +26,10 @@ function AuthProvider(props) {
 
   const login = async (data) => {
     try {
-      const Login = await axios.post("http://localhost:4000/user/login", data);
+      const Login = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        data
+      );
       const token = Login.data.token;
       localStorage.setItem("token", token);
       const userDataFromToken = jwtDecode(token);
@@ -45,7 +48,10 @@ function AuthProvider(props) {
 
   const register = async (data) => {
     try {
-      await axios.post("http://localhost:4000/user/register", data);
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/user/register`,
+        data
+      );
       buttonRegister();
     } catch (e) {
       alert("Please fill out all fields");
@@ -62,7 +68,7 @@ function AuthProvider(props) {
 
   const checkToken = async () => {
     try {
-      await axios.get("http://localhost:4000/user/us");
+      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/us`);
     } catch (e) {
       setIsToken(Boolean(window.localStorage.getItem("token")));
       alert("please Log-in again");

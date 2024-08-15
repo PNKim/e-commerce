@@ -6,6 +6,7 @@ const productRouter = Router();
 
 productRouter
   .get("/", async (req, res) => {
+    console.log(1);
     try {
       const data = await connectionPool.query("select * from products");
       return res.json({

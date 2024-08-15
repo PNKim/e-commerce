@@ -1,4 +1,3 @@
-// โค้ดนี้อยู่ในไฟล์ server/middlewares/protect.js
 import jwt from "jsonwebtoken";
 
 export const protect = async (req, res, next) => {

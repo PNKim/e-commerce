@@ -6,14 +6,14 @@ import { useAuth } from "../authentication/auth";
 
 function ProductPage() {
   const params = useParams();
-  const { checkToken } = useAuth();
+  const { checkToken, seenLogin } = useAuth();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
 
   const viewProductServer = async () => {
     try {
       const data = await axios.get(
-        `http://localhost:4000/product/${params.productId}`
+        `${import.meta.env.VITE_BACKEND_URL}/product/${params.productId}`
       );
       setProduct(data.data.product.rows[0]);
     } catch (e) {
@@ -23,7 +23,7 @@ function ProductPage() {
 
   const addToCart = async () => {
     try {
-      await axios.post("http://localhost:4000/cart", {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/cart`, {
         product: product,
         quantity: quantity,
       });
@@ -53,7 +53,13 @@ function ProductPage() {
   }, []);
 
   return (
-    <section className="h-screen mt-10 flex justify-center gap-10">
+    <section
+      className={
+        seenLogin
+          ? "h-screen pt-40 flex justify-center opacity-30 gap-10"
+          : "h-screen pt-40 flex justify-center gap-10"
+      }
+    >
       <div>
         <img src={product.image} alt={product.name} className="w-72 h-72" />
       </div>

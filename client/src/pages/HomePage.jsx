@@ -4,12 +4,12 @@ function HomePage() {
   const { seenLogin } = useAuth();
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="w-full pt-28 flex flex-col items-center">
       <div
         className={
           seenLogin
-            ? "flex flex-col items-center opacity-30 z-1 "
-            : "flex flex-col items-center z-1"
+            ? "w-full flex flex-col items-center opacity-30 z-1 "
+            : "w-full flex flex-col items-center z-1"
         }
       >
         <MainHomePage />
