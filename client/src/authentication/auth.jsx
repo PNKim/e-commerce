@@ -27,7 +27,7 @@ function AuthProvider(props) {
   const login = async (data) => {
     try {
       const Login = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/login`,
+        `${import.meta.env.VITE_BACKEND_URL}/user/login`,
         data
       );
       const token = Login.data.token;

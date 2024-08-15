@@ -9,56 +9,57 @@ function LoginPage() {
   const { login, buttonLogin, buttonRegister, seenRegister } = useAuth();
 
   return (
-    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-20 gap-20">
+    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-20">
       {seenRegister ? <Register /> : null}
-      <span className="w-[50%] h-[80%] bg-white absolute z-3"></span>
-      <h2 className="relative z-4">Login</h2>
-      <form
-        className="flex flex-col gap-20"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const data = { username, password };
-          login(data);
-        }}
-      >
-        <input
-          type="text"
-          value={username}
-          placeholder="username"
-          className="w-96 text-center flex relative z-4 "
-          onChange={(e) => setUsername(e.target.value)}
-        />
+      <span className="sm:w-[40%] md:w-[30%] lg:w-[20%] h-fit p-10 bg-white rounded-3xl flex flex-col gap-10 items-center absolute z-3">
+        <h1 className="text-xl relative z-4">Login</h1>
+        <form
+          className="w-full flex flex-col gap-10"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = { username, password };
+            login(data);
+          }}
+        >
+          <input
+            type="text"
+            value={username}
+            placeholder="username"
+            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
-        <input
-          type="password"
-          value={password}
-          placeholder="password"
-          className="w-96 text-center flex relative z-4"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <div className="text-center flex justify-around">
-          <button
-            className="w-[40%] text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
-            type="submit"
-          >
-            Login
-          </button>
-          <button
-            className="w-[40%] text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
-            type="button"
-            onClick={buttonRegister}
-          >
-            Register
-          </button>
-        </div>
-      </form>
-      <button
-        className="p-2 bg-gray-200 absolute top-[11%] right-[26%] z-4"
-        type="button"
-        onClick={buttonLogin}
-      >
-        X
-      </button>
+          <input
+            type="password"
+            value={password}
+            placeholder="password"
+            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <div className="w-full text-center flex flex-col sm:flex-row justify-center gap-5">
+            <button
+              className="w-full sm:w-[40%] text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
+              type="submit"
+            >
+              Login
+            </button>
+            <button
+              className="w-full sm:w-[40%] text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
+              type="button"
+              onClick={buttonRegister}
+            >
+              Register
+            </button>
+          </div>
+        </form>
+        <button
+          className="px-4 py-2 bg-gray-200 rounded-full absolute top-4 right-4 z-4"
+          type="button"
+          onClick={buttonLogin}
+        >
+          X
+        </button>
+      </span>
     </div>
   );
 }

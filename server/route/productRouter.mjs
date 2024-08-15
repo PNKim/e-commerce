@@ -1,12 +1,10 @@
 import { Router } from "express";
-import product from "./product.mjs";
 import connectionPool from "../utils/db.mjs";
 
 const productRouter = Router();
 
 productRouter
   .get("/", async (req, res) => {
-    console.log(1);
     try {
       const data = await connectionPool.query("select * from products");
       return res.json({
@@ -24,7 +22,7 @@ productRouter
       `select * from products inner join categories on products.category_id = categories.category_id where product_id=$1`,
       [productId]
     );
-    return res.json({
+    return res.status(200).json({
       product: data,
     });
   });

@@ -10,72 +10,94 @@ function Register() {
 
   const { register, buttonLogin, buttonRegister } = useAuth();
 
+  const validateData = (data) => {
+    const { username, password, firstname, lastname, address } = data;
+    if (!username && !password && !firstname && !lastname && !address) {
+      throw new Error("error");
+    }
+  };
+
   return (
-    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-10 gap-20">
-      <span className="w-[50%] h-[80%] bg-white absolute z-3"></span>
-      <h2 className="relative z-4">Register</h2>
-      <form
-        className="flex flex-col items-center gap-10"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const data = { username, password, firstname, lastname, address };
-          register(data);
-        }}
-      >
-        <input
-          type="text"
-          value={username}
-          placeholder="username"
-          className="w-96 text-center flex relative z-4"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-        <input
-          type="password"
-          value={password}
-          placeholder="password"
-          className="w-96 text-center flex relative z-4"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input
-          type="text"
-          value={firstname}
-          placeholder="firstname"
-          className="w-96 text-center flex relative z-4"
-          onChange={(e) => setFirstname(e.target.value)}
-        />
-
-        <input
-          type="text"
-          value={lastname}
-          placeholder="lastname"
-          className="w-96 text-center flex relative z-4"
-          onChange={(e) => setLastname(e.target.value)}
-        />
-        <input
-          type="text"
-          value={address}
-          placeholder="address"
-          className="w-96 text-center flex relative z-4"
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <button
-          className="w-[40%] p-5 text-xl bg-gray-400 relative text-center z-4"
-          type="submit"
+    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-10 gap-10">
+      <span className="sm:w-[40%] md:w-[30%] lg:w-[20%] h-fit p-10 bg-white rounded-3xl flex flex-col gap-10 items-center absolute z-3">
+        {" "}
+        <h2 className="relative text-xl z-4">Register</h2>
+        <form
+          className="w-full flex flex-col items-center gap-10"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const data = { username, password, firstname, lastname, address };
+            try {
+              validateData(data);
+              register(data);
+            } catch (e) {
+              console.log("error");
+            }
+          }}
         >
-          Register
+          <input
+            name="username"
+            type="text"
+            value={username}
+            placeholder="username"
+            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+
+          <input
+            name="password"
+            type="password"
+            value={password}
+            placeholder="password"
+            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <input
+            name="firstname"
+            type="text"
+            value={firstname}
+            placeholder="firstname"
+            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            onChange={(e) => setFirstname(e.target.value)}
+          />
+
+          <input
+            name="lastname"
+            type="text"
+            value={lastname}
+            placeholder="lastname"
+            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            onChange={(e) => setLastname(e.target.value)}
+          />
+
+          <input
+            name="address"
+            type="text"
+            value={address}
+            placeholder="address"
+            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            onChange={(e) => setAddress(e.target.value)}
+          />
+
+          <button
+            className="w-full text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
+            type="submit"
+          >
+            Register
+          </button>
+        </form>
+        <button
+          className="px-4 py-2 bg-gray-200 rounded-full absolute top-4 right-4 z-4"
+          type="button"
+          onClick={() => {
+            buttonRegister();
+            buttonLogin();
+          }}
+        >
+          X
         </button>
-      </form>
-      <button
-        className="p-2 bg-gray-200 absolute top-[11%] right-[26%] z-4"
-        type="button"
-        onClick={() => {
-          buttonRegister();
-          buttonLogin();
-        }}
-      >
-        X
-      </button>
+      </span>
     </div>
   );
 }
