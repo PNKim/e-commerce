@@ -4,7 +4,7 @@ function HomePage() {
   const { seenLogin } = useAuth();
 
   return (
-    <div className="w-full pt-28 flex flex-col items-center">
+    <div className="w-full min-h-screen pt-28 flex flex-col items-center">
       <div
         className={
           seenLogin

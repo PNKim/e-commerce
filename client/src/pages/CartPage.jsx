@@ -2,9 +2,10 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useAuth } from "../authentication/auth";
+import Order from "../components/Order";
 
 function CartPage() {
-  const { state, checkToken } = useAuth();
+  const { state } = useAuth();
 
   const [getCartProduct, setGetCartProduct] = useState([]);
   const getCart = async () => {
@@ -38,9 +39,7 @@ function CartPage() {
 
   return (
     <section className="w-[80%] min-h-screen pt-40 flex flex-col items-center">
-      <button onClick={checkToken} className="self-end">
-        order
-      </button>
+      <Order product={getCartProduct} />
       {getCartProduct.map((product) => {
         return (
           <div

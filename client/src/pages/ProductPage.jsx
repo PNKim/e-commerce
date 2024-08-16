@@ -60,21 +60,21 @@ function ProductPage() {
           : "h-screen pt-40 flex justify-center gap-10"
       }
     >
-      <div className="p-6 h-fit bg-blue-gray-200 rounded-2xl flex justify-around gap-10">
-        <div>
+      <div className="w-[80%] p-6 h-fit bg-blue-gray-200 rounded-2xl flex flex-col lg:flex-row items-center lg:justify-around gap-10">
+        <div className="min-w-60 h-60">
           <img
             src={product.image}
             alt={product.name}
-            className="w-72 h-72 rounded-2xl"
+            className="w-60 h-60 rounded-2xl"
           />
         </div>
-        <div className="flex flex-col justify-around">
+        <div className="w-[80%] flex flex-col justify-around gap-4">
           <p>Name : {product.name}</p>
           <p>Category : {product.category}</p>
           <p>Price : {product.price}</p>
           <p>Quantity : {product.quantity}</p>
           <p className="flex-">{product.description}</p>
-          <span className="mt-2 self-end flex items-center text-xl gap-5">
+          <span className="mt-2 self-end flex items-center text-xl gap-5 scale-90 lg:scale-100">
             <button
               type="button"
               className="btn btn-neutral px-[18px] text-2xl rounded-full"
