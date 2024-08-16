@@ -66,16 +66,6 @@ function AuthProvider(props) {
     setSeenRegister(!seenRegister);
   };
 
-  const checkToken = async () => {
-    try {
-      await axios.get(`${import.meta.env.VITE_BACKEND_URL}/user/us`);
-    } catch (e) {
-      setIsToken(Boolean(window.localStorage.getItem("token")));
-      alert("please Log-in again");
-      navigate("/");
-    }
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -88,8 +78,8 @@ function AuthProvider(props) {
         buttonLogin,
         buttonRegister,
         seenLogin,
+        setSeenLogin,
         seenRegister,
-        checkToken,
       }}
     >
       {props.children}

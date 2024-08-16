@@ -6,9 +6,14 @@ const productRouter = Router();
 productRouter
   .get("/", async (req, res) => {
     try {
-      const data = await connectionPool.query("select * from products");
+      const { productName } = req.query;
+
+      const data = await connectionPool.query(
+        `select * from products where name LIKE $1`,
+        [`%${productName}%`]
+      );
       return res.json({
-        product: data,
+        product: data.rows,
       });
     } catch (e) {
       return res.status(404).json({

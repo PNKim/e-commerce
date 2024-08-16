@@ -13,7 +13,6 @@ function HomePage() {
         }
       >
         <MainHomePage />
-        <footer className="h-[10%]">Contact</footer>
       </div>
     </div>
   );

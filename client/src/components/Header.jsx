@@ -36,6 +36,7 @@ function Header() {
                     <button
                       onClick={() => {
                         navigate(`/cart/${state.user.id}`);
+                        window.location.reload();
                       }}
                     >
                       Cart

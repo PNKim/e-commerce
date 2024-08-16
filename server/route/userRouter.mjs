@@ -3,7 +3,6 @@ import connectionPool from "../utils/db.mjs";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { protect } from "../middleware/protect.mjs";
 
 const userRouter = Router();
 
@@ -93,12 +92,6 @@ userRouter
     return res.status(200).json({
       message: "login successfully",
       token,
-    });
-  })
-  .use(protect)
-  .get("/us", (req, res) => {
-    return res.status(200).json({
-      message: "hello",
     });
   });
 

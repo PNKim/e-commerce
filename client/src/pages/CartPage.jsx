@@ -10,7 +10,7 @@ function CartPage() {
   const getCart = async () => {
     try {
       const data = await axios.get(
-        `http://localhost:4000/cart/${state.user.id}`
+        `${import.meta.env.VITE_BACKEND_URL}/cart/${state.user.id}`
       );
       setGetCartProduct(data.data.product.rows);
     } catch (e) {
@@ -20,12 +20,13 @@ function CartPage() {
 
   const removeProductCart = async (product) => {
     try {
-      await axios.delete(`http://localhost:4000/cart/${product.product_id}`);
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/cart/${product.product_id}`
+      );
       const newProduct = getCartProduct.filter((item) => {
         return item.product_id !== product.product_id;
       });
       setGetCartProduct(newProduct);
-      alert("the product has been remove");
     } catch (e) {
       alert("error connection from server");
     }
@@ -36,7 +37,7 @@ function CartPage() {
   }, []);
 
   return (
-    <section className="w-[80%] pt-40 flex flex-col items-center">
+    <section className="w-[80%] min-h-screen pt-40 flex flex-col items-center">
       <button onClick={checkToken} className="self-end">
         order
       </button>
@@ -51,16 +52,24 @@ function CartPage() {
               onClick={() => {
                 removeProductCart(product);
               }}
-              className="absolute top-1 right-1"
+              className="btn btn-neutral px-4 rounded-full absolute top-4 right-4"
             >
               X
             </button>
-            <img src={product.image} alt={product.name} className="w-52 h-52" />
-            <div>
-              <p>name: {product.name}</p>
-              <p>price: {product.price}</p>
-              <p>quantity: {product.sum}</p>
-              <p>total: {product.price * product.sum}</p>
+            <div className="w-full p-6 h-fit bg-blue-gray-200 rounded-2xl flex  gap-10">
+              <div>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-52 h-52"
+                />
+              </div>
+              <div className="flex flex-col justify-around">
+                <p>Name: {product.name}</p>
+                <p>Category: {product.price}</p>
+                <p>Price: {product.sum}</p>
+                <p>Total: {product.price * product.sum}</p>
+              </div>
             </div>
           </div>
         );

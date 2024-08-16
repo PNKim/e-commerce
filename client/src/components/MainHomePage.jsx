@@ -13,11 +13,9 @@ function MainHomePage() {
   const navigate = useNavigate();
 
   const getData = async () => {
-    console.log(import.meta.env.VITE_BACKEND_URL);
     const data = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/product?productName=${searchProduct}`
     );
-    console.log(data);
     setGetProduct(data.data.product);
   };
 

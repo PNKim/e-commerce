@@ -6,7 +6,7 @@ import { useAuth } from "../authentication/auth";
 
 function ProductPage() {
   const params = useParams();
-  const { checkToken, seenLogin } = useAuth();
+  const { seenLogin, setSeenLogin } = useAuth();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
 
@@ -30,7 +30,7 @@ function ProductPage() {
       setQuantity(0);
       alert("add product to cart success");
     } catch (e) {
-      alert("error connection from server");
+      setSeenLogin(true);
     }
   };
 
@@ -60,34 +60,47 @@ function ProductPage() {
           : "h-screen pt-40 flex justify-center gap-10"
       }
     >
-      <div>
-        <img src={product.image} alt={product.name} className="w-72 h-72" />
-      </div>
-      <div className="flex flex-col">
-        <p>{product.name}</p>
-        <p>{product.category}</p>
-        <p>{product.price}</p>
-        <p>{product.quantity}</p>
-        <p className="flex-">{product.description}</p>
-        <span className="mt-2 self-end flex items-center text-xl gap-5">
-          <button type="button" onClick={minus}>
-            -
-          </button>
-          <span>{quantity}</span>
-          <button type="button" onClick={plus}>
-            +
-          </button>
-          <button
-            type="button"
-            className="btn btn-outline bg-blue-gray-600 text-white"
-            onClick={() => {
-              // checkToken();
-              // addToCart();
-            }}
-          >
-            add to cart
-          </button>
-        </span>
+      <div className="p-6 h-fit bg-blue-gray-200 rounded-2xl flex justify-around gap-10">
+        <div>
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-72 h-72 rounded-2xl"
+          />
+        </div>
+        <div className="flex flex-col justify-around">
+          <p>Name : {product.name}</p>
+          <p>Category : {product.category}</p>
+          <p>Price : {product.price}</p>
+          <p>Quantity : {product.quantity}</p>
+          <p className="flex-">{product.description}</p>
+          <span className="mt-2 self-end flex items-center text-xl gap-5">
+            <button
+              type="button"
+              className="btn btn-neutral px-[18px] text-2xl rounded-full"
+              onClick={minus}
+            >
+              -
+            </button>
+            <span>{quantity}</span>
+            <button
+              type="button"
+              className="btn btn-neutral px-4 text-2xl rounded-full"
+              onClick={plus}
+            >
+              +
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline bg-blue-gray-600 text-white"
+              onClick={() => {
+                addToCart();
+              }}
+            >
+              add to cart
+            </button>
+          </span>
+        </div>
       </div>
     </section>
   );
