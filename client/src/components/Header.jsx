@@ -46,6 +46,17 @@ function Header() {
                     <button
                       className="z-6"
                       onClick={() => {
+                        navigate(`/order/${state.user.id}`);
+                        window.location.reload();
+                      }}
+                    >
+                      Order
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className="z-6"
+                      onClick={() => {
                         logout();
                       }}
                     >

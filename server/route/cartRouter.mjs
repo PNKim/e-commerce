@@ -5,7 +5,7 @@ import { protect } from "../middleware/protect.mjs";
 const cartRouter = Router();
 
 cartRouter
-  .get("/:id", async (req, res) => {
+  .get("/:id", [protect], async (req, res) => {
     const status = "cart";
     const user_id = req.params.id;
     try {
@@ -26,8 +26,7 @@ cartRouter
       });
     }
   })
-  .use(protect)
-  .post("/", async (req, res) => {
+  .post("/", [protect], async (req, res) => {
     if (req.body.quantity === 0) {
       return res.status(400).json({
         message: "missing data quantity from user",
@@ -70,7 +69,7 @@ cartRouter
       });
     }
   })
-  .delete("/:id", async (req, res) => {
+  .delete("/:id", [protect], async (req, res) => {
     const productId = req.params.id;
     try {
       await connectionPool.query(

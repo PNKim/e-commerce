@@ -3,6 +3,7 @@ import HomePage from "./HomePage";
 import ProductPage from "./ProductPage";
 import CartPage from "./CartPage";
 import Header from "../components/Header";
+import OrderPage from "./OrderPage";
 
 function AuthenticationApp() {
   return (
@@ -11,6 +12,7 @@ function AuthenticationApp() {
       <Routes>
         <Route path="*" element={<HomePage />} />
         <Route path="/cart/:userId" element={<CartPage />} />
+        <Route path="/order/:userId" element={<OrderPage />} />
         <Route
           path="/product/:productId/:productName"
           element={<ProductPage />}
