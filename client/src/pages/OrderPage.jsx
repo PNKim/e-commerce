@@ -25,7 +25,7 @@ function OrderPage() {
 
   return (
     <>
-      <section className="w-full min-h-screen pt-40 flex flex-col lg:flex-row justify-center gap-10">
+      <section className="w-full min-h-screen pt-40 flex flex-col sm:flex-row sm:justify-center gap-10">
         <div className="w-full sm:w-[70%] xl:w-[30%] text-2xl flex flex-col items-center gap-10">
           Order History
           {getCartProduct.map((product) => {

@@ -34,7 +34,7 @@ function MainHomePage() {
   return (
     <main className="w-[80%] my-5 flex flex-col items-center gap-20 z-1">
       <div className="flex items-center gap-5">
-        <label htmlFor="product">search product</label>
+        <label htmlFor="product">search</label>
         <DebounceInput
           type="text"
           debounceTimeout={300}
