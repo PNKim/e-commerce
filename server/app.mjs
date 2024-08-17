@@ -3,6 +3,7 @@ import cors from "cors";
 import productRouter from "./route/productRouter.mjs";
 import userRouter from "./route/userRouter.mjs";
 import cartRouter from "./route/cartRouter.mjs";
+import orderRouter from "./route/orderRouter.mjs";
 
 const app = express();
 const port = 4000;
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/product", productRouter);
 app.use("/cart", cartRouter);
+app.use("/order", orderRouter);
 
 app.get("/test", (req, res) => {
   return res.json("Server running!!!");
