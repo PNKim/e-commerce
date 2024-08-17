@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import LoginPage from "./Login";
 import { useAuth } from "../authentication/auth";
+import { useState } from "react";
 
 function Header() {
   const navigate = useNavigate();
   const { state, logout, isToken, buttonLogin, seenLogin } = useAuth();
+  const [open, setOpen] = useState(false);
 
   return (
     <header className="w-full box-border m-0 p-0 fixed z-10 ">
@@ -27,42 +29,55 @@ function Header() {
           </button>
           {isToken ? (
             <div>
-              <details className="dropdown">
-                <summary className="btn m-1 text-xl text-gray-300">
+              <div className="dropdown dropdown-bottom">
+                <button
+                  tabIndex={0}
+                  onClick={() => {
+                    setOpen(!open);
+                  }}
+                  className="btn m-1 text-xl text-gray-300"
+                >
                   {state.user.firstname}
-                </summary>
-                <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] p-2 text-xl shadow">
-                  <li>
-                    <button
-                      onClick={() => {
-                        navigate(`/cart/${state.user.id}`);
-                      }}
-                    >
-                      Cart
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className="z-6"
-                      onClick={() => {
-                        navigate(`/order/${state.user.id}`);
-                      }}
-                    >
-                      Order
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      className="z-6"
-                      onClick={() => {
-                        logout();
-                      }}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              </details>
+                </button>
+                {open && (
+                  <ul
+                    tabIndex={0}
+                    className="menu dropdown-content bg-base-100 rounded-box z-[1] p-2 text-xl shadow"
+                  >
+                    <li>
+                      <button
+                        onClick={() => {
+                          navigate(`/cart/${state.user.id}`);
+                          setOpen(!open);
+                        }}
+                      >
+                        Cart
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="z-6"
+                        onClick={() => {
+                          navigate(`/order/${state.user.id}`);
+                          setOpen(!open);
+                        }}
+                      >
+                        Order
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        className="z-6"
+                        onClick={() => {
+                          logout();
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                )}
+              </div>
             </div>
           ) : (
             <button
