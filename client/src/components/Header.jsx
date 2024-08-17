@@ -36,7 +36,6 @@ function Header() {
                     <button
                       onClick={() => {
                         navigate(`/cart/${state.user.id}`);
-                        window.location.reload();
                       }}
                     >
                       Cart
@@ -47,7 +46,6 @@ function Header() {
                       className="z-6"
                       onClick={() => {
                         navigate(`/order/${state.user.id}`);
-                        window.location.reload();
                       }}
                     >
                       Order
