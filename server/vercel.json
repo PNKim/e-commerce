@@ -3,12 +3,12 @@
   "builds": [
     { "src": "*.html", "use": "@vercel/static" },
     { "src": "*.py", "use": "@vercel/python" },
-    { "src": "*.js", "use": "@vercel/node" }
+    { "src": "*.mjs", "use": "@vercel/node" }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "app.js"
+      "dest": "app.mjs"
     }
   ]
 }
