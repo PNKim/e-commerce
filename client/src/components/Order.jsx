@@ -27,8 +27,6 @@ function Order({ product }) {
     }
   };
 
-  console.log(product);
-
   useEffect(() => {
     if (product) {
       TotalPrice();

@@ -6,6 +6,7 @@ import { useAuth } from "./authentication/auth";
 
 function App() {
   const { isToken } = useAuth();
+  console.log(isToken);
 
   useEffect(() => {
     document.title = "KimShop";

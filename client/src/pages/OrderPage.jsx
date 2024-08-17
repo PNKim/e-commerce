@@ -5,7 +5,6 @@ import { useAuth } from "../authentication/auth";
 
 function OrderPage() {
   const { state } = useAuth();
-  console.log(state);
 
   const [getCartProduct, setGetCartProduct] = useState([]);
   const getCart = async () => {
