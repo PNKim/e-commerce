@@ -16,8 +16,8 @@ productRouter
         product: data.rows,
       });
     } catch (e) {
-      return res.status(404).json({
-        message: e,
+      return res.status(400).json({
+        message: "Error connection",
       });
     }
   })

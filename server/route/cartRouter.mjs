@@ -21,7 +21,7 @@ cartRouter
         product: data,
       });
     } catch (e) {
-      return res.status(200).json({
+      return res.status(400).json({
         message: "Error connection",
       });
     }
@@ -64,8 +64,8 @@ cartRouter
         message: "create cart success",
       });
     } catch (e) {
-      return res.status(404).json({
-        message: "Server connection error",
+      return res.status(400).json({
+        message: "Error connection",
       });
     }
   })
@@ -80,8 +80,8 @@ cartRouter
         message: "This product has been removed",
       });
     } catch (e) {
-      return res.status(404).json({
-        message: "Error conneciton",
+      return res.status(400).json({
+        message: "Error connection",
       });
     }
   });

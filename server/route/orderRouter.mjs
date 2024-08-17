@@ -17,7 +17,7 @@ orderRouter
       });
     } catch (e) {
       return res.status(400).json({
-        message: "erro connection from database",
+        message: "Error connection",
       });
     }
   })
@@ -39,7 +39,7 @@ orderRouter
       });
     } catch (e) {
       return res.status(400).json({
-        message: "order fail",
+        message: "Error connection",
       });
     }
   });
