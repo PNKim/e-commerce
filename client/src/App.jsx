@@ -10,7 +10,7 @@ function App() {
 
   useEffect(() => {
     document.title = "KimShop";
-  }, []);
+  }, [isToken]);
 
   return <>{isToken ? <AuthenticationApp /> : <UnAuthenticatedApp />}</>;
 }
