@@ -7,6 +7,7 @@ export default function Pagination(props) {
   ) {
     pagination.push(i + 1);
   }
+
   return (
     <div className="join">
       {pagination.map((item) => {
