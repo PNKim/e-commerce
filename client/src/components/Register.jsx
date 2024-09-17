@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useAuth } from "../authentication/auth";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { buttonLogin, buttonRegister } from "../redux/authSlice";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -8,7 +10,19 @@ function Register() {
   const [lastname, setLastname] = useState("");
   const [address, setAddress] = useState("");
 
-  const { register, buttonLogin, buttonRegister } = useAuth();
+  const dispatch = useDispatch();
+
+  const register = async (data) => {
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/user/register`,
+        data
+      );
+      dispatch(buttonRegister());
+    } catch (e) {
+      alert("Please fill out all fields");
+    }
+  };
 
   const validateData = (data) => {
     const { username, password, firstname, lastname, address } = data;
@@ -91,8 +105,8 @@ function Register() {
           className="px-4 py-2 bg-gray-200 rounded-full absolute top-4 right-4 z-4"
           type="button"
           onClick={() => {
-            buttonRegister();
-            buttonLogin();
+            dispatch(buttonRegister());
+            dispatch(buttonLogin());
           }}
         >
           X

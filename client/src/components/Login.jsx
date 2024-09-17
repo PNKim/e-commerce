@@ -1,12 +1,33 @@
 import { useState } from "react";
 import Register from "./Register";
-import { useAuth } from "../authentication/auth";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { buttonLogin, buttonRegister, setState } from "../redux/authSlice";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { seenRegister } = useSelector((state) => {
+    return state.counter;
+  });
 
-  const { login, buttonLogin, buttonRegister, seenRegister } = useAuth();
+  const login = async (data) => {
+    try {
+      const Login = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/user/login`,
+        data
+      );
+      const token = Login.data.token;
+      localStorage.setItem("token", token);
+      const userDataFromToken = jwtDecode(token);
+      dispatch(setState({ user: userDataFromToken }));
+      dispatch(buttonLogin());
+    } catch (e) {
+      alert("Invalid username or password");
+    }
+  };
 
   return (
     <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-20">
@@ -46,7 +67,9 @@ function LoginPage() {
             <button
               className="w-full sm:w-[40%] text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
               type="button"
-              onClick={buttonRegister}
+              onClick={() => {
+                dispatch(buttonRegister());
+              }}
             >
               Register
             </button>
@@ -55,7 +78,9 @@ function LoginPage() {
         <button
           className="px-4 py-2 bg-gray-200 rounded-full absolute top-4 right-4 z-4"
           type="button"
-          onClick={buttonLogin}
+          onClick={() => {
+            dispatch(buttonLogin());
+          }}
         >
           X
         </button>

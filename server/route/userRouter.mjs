@@ -86,7 +86,7 @@ userRouter
         role: user.rows[0].role,
       },
       process.env.SECRET_KEY,
-      { expiresIn: "50000000" }
+      { expiresIn: "500000" }
     );
 
     return res.status(200).json({

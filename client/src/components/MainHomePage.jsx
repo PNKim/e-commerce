@@ -47,11 +47,11 @@ function MainHomePage() {
         />
       </div>
       <div className="w-full flex justify-center flex-wrap gap-28">
-        {product.map((product) => {
+        {product.map((product, index) => {
           return (
             <button
               className="p-2 w-full max-w-72 btn h-fit bg-blue-gray-200 text-black text-lg hover:bg-blue-gray-300 border-none flex flex-col"
-              key={product.product_id}
+              key={index}
               onClick={() => {
                 navigate(`/product/${product.product_id}/${product.name}`);
               }}

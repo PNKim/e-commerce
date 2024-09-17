@@ -10,9 +10,9 @@ export default function Pagination(props) {
 
   return (
     <div className="join">
-      {pagination.map((item) => {
+      {pagination.map((item, index) => {
         return (
-          <>
+          <div key={index}>
             <input
               className="join-item btn btn-square"
               type="radio"
@@ -23,7 +23,7 @@ export default function Pagination(props) {
                 props.handlePagination(item);
               }}
             />
-          </>
+          </div>
         );
       })}
     </div>

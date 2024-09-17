@@ -1,12 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import LoginPage from "./Login";
-import { useAuth } from "../authentication/auth";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { buttonLogin, setState } from "../redux/authSlice";
 
 function Header() {
   const navigate = useNavigate();
-  const { state, logout, isToken, buttonLogin, seenLogin } = useAuth();
+  const dispatch = useDispatch();
+  const { seenLogin, status, isToken } = useSelector((state) => {
+    return state.counter;
+  });
   const [open, setOpen] = useState(false);
+
+  const logout = () => {
+    window.localStorage.removeItem("token");
+    dispatch(setState({ user: null }));
+  };
 
   return (
     <header className="w-full box-border m-0 p-0 fixed z-10 ">
@@ -27,7 +36,7 @@ function Header() {
           >
             KimShop
           </button>
-          {isToken ? (
+          {isToken && status.user ? (
             <div>
               <div className="dropdown dropdown-bottom">
                 <button
@@ -37,7 +46,7 @@ function Header() {
                   }}
                   className="btn m-1 text-xl text-gray-300"
                 >
-                  {state.user.firstname}
+                  {status.user.firstname}
                 </button>
                 {open && (
                   <ul
@@ -47,7 +56,7 @@ function Header() {
                     <li>
                       <button
                         onClick={() => {
-                          navigate(`/cart/${state.user.id}`);
+                          navigate(`/cart/${status.user.id}`);
                           setOpen(!open);
                         }}
                       >
@@ -58,7 +67,7 @@ function Header() {
                       <button
                         className="z-6"
                         onClick={() => {
-                          navigate(`/order/${state.user.id}`);
+                          navigate(`/order/${status.user.id}`);
                           setOpen(!open);
                         }}
                       >
@@ -83,7 +92,7 @@ function Header() {
             <button
               className="btn text-xl z-5"
               onClick={() => {
-                buttonLogin();
+                dispatch(buttonLogin());
               }}
             >
               Login

@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useAuth } from "../authentication/auth";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function Order({ product }) {
-  const { state } = useAuth();
+  const { status } = useSelector((state) => {
+    return state.counter;
+  });
   const [total, setTotal] = useState([]);
   const navigate = useNavigate();
 
@@ -21,7 +23,7 @@ function Order({ product }) {
   const handleClick = async (data) => {
     try {
       await axios.post(`${import.meta.env.VITE_BACKEND_URL}/order`, data);
-      navigate(`/order/${state.user.id}`);
+      navigate(`/order/${status.user.id}`);
     } catch (e) {
       alert("error connection from server");
     }
@@ -53,7 +55,7 @@ function Order({ product }) {
           handleClick({
             cart_id: product[0].cart_id,
             price: total,
-            user_id: state.user.id,
+            user_id: status.user.id,
           });
         }}
         className="w-full btn bg-gray-600 text-white border-none rounded-2xl"

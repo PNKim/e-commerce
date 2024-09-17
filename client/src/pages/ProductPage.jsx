@@ -2,11 +2,15 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../authentication/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { buttonLogin } from "../redux/authSlice";
 
 function ProductPage() {
   const params = useParams();
-  const { seenLogin, setSeenLogin } = useAuth();
+  const dispatch = useDispatch();
+  const { seenLogin } = useSelector((state) => {
+    return state.counter;
+  });
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(0);
 
@@ -30,7 +34,7 @@ function ProductPage() {
       setQuantity(0);
       alert("add product to cart success");
     } catch (e) {
-      setSeenLogin(true);
+      dispatch(buttonLogin());
     }
   };
 

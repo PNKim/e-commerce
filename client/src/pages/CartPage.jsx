@@ -1,17 +1,19 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useAuth } from "../authentication/auth";
 import Order from "../components/Order";
+import { useSelector } from "react-redux";
 
 function CartPage() {
-  const { state } = useAuth();
+  const { status } = useSelector((state) => {
+    return state.counter;
+  });
 
   const [getCartProduct, setGetCartProduct] = useState([]);
   const getCart = async () => {
     try {
       const data = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/cart/${state.user.id}`
+        `${import.meta.env.VITE_BACKEND_URL}/cart/${status.user.id}`
       );
       setGetCartProduct(data.data.product.rows);
     } catch (e) {
