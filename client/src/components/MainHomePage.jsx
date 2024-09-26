@@ -4,24 +4,27 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Paganation";
 import { DebounceInput } from "react-debounce-input";
+import { useDispatch, useSelector } from "react-redux";
+import { getProduct } from "../redux/productSlice";
 
 function MainHomePage() {
   const [searchProduct, setSearchProduct] = useState("");
-  const [getProduct, setGetProduct] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage] = useState(8);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { products } = useSelector((state) => state.product);
 
   const getData = async () => {
     const data = await axios.get(
       `${import.meta.env.VITE_BACKEND_URL}/product?productName=${searchProduct}`
     );
-    setGetProduct(data.data.product);
+    dispatch(getProduct(data.data.product));
   };
 
   const lastProduct = currentPage * productPerPage;
   const firstProduct = lastProduct - productPerPage;
-  const product = getProduct.slice(firstProduct, lastProduct);
+  const product = products.slice(firstProduct, lastProduct);
 
   const handlePagination = (item) => {
     setCurrentPage(item);
@@ -74,7 +77,7 @@ function MainHomePage() {
         })}
       </div>
       <Pagination
-        getProduct={getProduct}
+        getProduct={products}
         productPerPage={productPerPage}
         handlePagination={handlePagination}
       />

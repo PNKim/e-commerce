@@ -33,7 +33,7 @@ function Register() {
 
   return (
     <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-10 gap-10">
-      <span className="sm:w-[40%] md:w-[30%] lg:w-[20%] h-fit p-10 bg-white rounded-3xl flex flex-col gap-10 items-center absolute z-3">
+      <span className="sm:w-[40%] md:w-[30%] lg:w-[20%] min-w-[300px] h-fit p-10 bg-white rounded-3xl flex flex-col gap-10 items-center absolute z-3">
         {" "}
         <h2 className="relative text-xl z-4">Register</h2>
         <form
