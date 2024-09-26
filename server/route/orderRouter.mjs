@@ -5,7 +5,8 @@ import { protect } from "../middleware/protect.mjs";
 const orderRouter = Router();
 
 orderRouter
-  .get("/:id", [protect], async (req, res) => {
+  .use(protect)
+  .get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
       const data = await connectionPool.query(
@@ -21,7 +22,7 @@ orderRouter
       });
     }
   })
-  .post("/", [protect], async (req, res) => {
+  .post("/", async (req, res) => {
     const { cart_id, user_id, price } = req.body;
     try {
       await connectionPool.query(
