@@ -39,10 +39,10 @@ function Order({ product }) {
       <p className="w-full text-center p-2 bg-blue-gray-50 rounded-2xl">
         Your Order
       </p>
-      {product.map((item) => {
+      {product.map((item, index) => {
         return (
           <>
-            <div key={item.product_id}>
+            <div key={index}>
               {item.name} x {item.sum}
             </div>
           </>

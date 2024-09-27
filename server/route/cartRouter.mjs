@@ -7,19 +7,19 @@ const cartRouter = Router();
 cartRouter
   .use(protect)
   .get("/:id", async (req, res) => {
-    const status = "cart";
+    const { status } = req.query;
     const user_id = req.params.id;
     try {
       const data = await connectionPool.query(
         `select sum(count),carts.cart_id, products.product_id ,products.image, products.name, products.price from carts_products 
         inner join carts on carts_products.cart_id = carts.cart_id
         inner join products on carts_products.product_id = products.product_id 
-        where carts.user_id=$1 and carts.status=$2
+        where carts.user_id=$1 and (carts.status=$2 or $2 is null or $2 = '')
         group by carts.cart_id,products.product_id`,
         [user_id, status]
       );
       return res.status(200).json({
-        product: data,
+        product: data.rows,
       });
     } catch (e) {
       return res.status(400).json({

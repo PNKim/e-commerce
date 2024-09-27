@@ -13,9 +13,9 @@ function CartPage() {
   const getCart = async () => {
     try {
       const data = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/cart/${status.user.id}`
+        `${import.meta.env.VITE_BACKEND_URL}/cart/${status.user.id}?status=cart`
       );
-      setGetCartProduct(data.data.product.rows);
+      setGetCartProduct(data.data.product);
     } catch (e) {
       console.log("error connection from server");
     }
@@ -37,7 +37,7 @@ function CartPage() {
 
   useEffect(() => {
     getCart();
-  }, []);
+  }, [status]);
 
   return (
     <>
@@ -45,10 +45,10 @@ function CartPage() {
         <div className="w-full sm:w-[60%] xl:w-[50%] drop-shadow-xl flex flex-col items-center gap-10">
           {getCartProduct[0] ? (
             <>
-              {getCartProduct.map((product) => {
+              {getCartProduct.map((product, index) => {
                 return (
                   <div
-                    key={product.product_id}
+                    key={index}
                     className="w-full flex justify-center gap-10 items-center relative
             "
                   >
