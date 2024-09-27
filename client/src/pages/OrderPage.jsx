@@ -8,15 +8,15 @@ function OrderPage() {
     return state.counter;
   });
 
-  const [getCartProduct, setGetCartProduct] = useState([]);
+  const [getOrderProduct, setGetOrderProduct] = useState([]);
   const getCart = async () => {
     try {
       const data = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/order/${status.user.id}`
       );
-      setGetCartProduct(data.data.data);
+      setGetOrderProduct(data.data.data);
     } catch (e) {
-      alert("error connection from server");
+      console.log("error connection from server");
     }
   };
 
@@ -29,21 +29,28 @@ function OrderPage() {
       <section className="w-full min-h-screen pt-40 flex flex-col xl:flex-row xl:justify-center gap-10">
         <div className="w-full xl:w-[40%] text-2xl flex flex-col items-center gap-10">
           Order History
-          {getCartProduct.map((product) => {
-            return (
-              <div
-                key={product.user_id}
-                className="w-full flex justify-center gap-10 items-center relative
-          "
-              >
-                <div className="w-full p-6 h-fit bg-blue-gray-200 rounded-2xl flex flex-col justify-between sm:flex-row gap-10">
-                  <p>Order:{product.order_id}</p>
-                  <p>Price:{product.price}</p>
-                  <p>Status:{product.status}</p>
-                </div>
-              </div>
-            );
-          })}
+          {getOrderProduct[0] ? (
+            <>
+              {getOrderProduct.map((product) => {
+                return (
+                  <div
+                    key={product.user_id}
+                    className="w-full flex justify-center gap-10 items-center relative drop-shadow-xl"
+                  >
+                    <div className="w-full p-6 h-fit bg-blue-gray-200 rounded-2xl flex flex-col justify-between sm:flex-row gap-10">
+                      <p>Order:{product.order_id}</p>
+                      <p>Price:{product.price}</p>
+                      <p>Status:{product.status}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <>
+              <span className="loading loading-dots loading-lg fixed top-52"></span>
+            </>
+          )}
         </div>
       </section>
     </>

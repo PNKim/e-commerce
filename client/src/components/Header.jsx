@@ -3,6 +3,8 @@ import LoginPage from "./Login";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { buttonLogin, setState } from "../redux/authSlice";
+import { setSearchProduct } from "../redux/productSlice";
+import { DebounceInput } from "react-debounce-input";
 
 function Header() {
   const navigate = useNavigate();
@@ -10,6 +12,10 @@ function Header() {
   const { seenLogin, status, isToken } = useSelector((state) => {
     return state.counter;
   });
+  const { searchProduct } = useSelector((state) => {
+    return state.product;
+  });
+
   const [open, setOpen] = useState(false);
 
   const logout = () => {
@@ -18,16 +24,10 @@ function Header() {
   };
 
   return (
-    <header className="w-full box-border m-0 p-0 fixed z-10 ">
+    <header className="w-full box-border m-0 p-0 fixed z-50 ">
       {seenLogin ? <LoginPage /> : null}
-      <section
-        className={
-          seenLogin
-            ? "flex flex-col items-center opacity-30 z-10 "
-            : "flex flex-col items-center z-10"
-        }
-      >
-        <div className="w-full p-8 bg-gray-700 text-white text-2xl flex justify-between">
+      <section className="flex flex-col items-center z-10">
+        <div className="w-full p-8 bg-gradient-to-l from-gray-500 to-gray-800 text-white text-2xl flex items-center justify-between">
           <button
             type="button"
             onClick={() => {
@@ -36,6 +36,19 @@ function Header() {
           >
             KimShop
           </button>
+          <div className="flex items-center gap-5">
+            <label htmlFor="product">search</label>
+            <DebounceInput
+              type="text"
+              debounceTimeout={300}
+              placeholder="name product"
+              className="px-4 bg-white text-black rounded-2xl"
+              value={searchProduct}
+              onChange={(e) => {
+                dispatch(setSearchProduct(e.target.value));
+              }}
+            />
+          </div>
           {isToken && status.user ? (
             <div>
               <div className="dropdown dropdown-bottom">
@@ -90,7 +103,7 @@ function Header() {
             </div>
           ) : (
             <button
-              className="btn text-xl z-5"
+              className="btn text-xl text-white z-5"
               onClick={() => {
                 dispatch(buttonLogin());
               }}

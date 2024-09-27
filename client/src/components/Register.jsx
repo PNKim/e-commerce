@@ -32,12 +32,12 @@ function Register() {
   };
 
   return (
-    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-10 gap-10">
-      <span className="sm:w-[40%] md:w-[30%] lg:w-[20%] min-w-[300px] h-fit p-10 bg-white rounded-3xl flex flex-col gap-10 items-center absolute z-3">
+    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-10">
+      <span className="sm:w-[25%] min-w-[300px] h-fit p-10 bg-white rounded-3xl flex flex-col gap-10 items-center absolute z-3">
         {" "}
         <h2 className="relative text-xl z-4">Register</h2>
         <form
-          className="w-full flex flex-col items-center gap-10"
+          className="w-full flex flex-col items-center gap-6"
           onSubmit={(e) => {
             e.preventDefault();
             const data = { username, password, firstname, lastname, address };
@@ -54,7 +54,7 @@ function Register() {
             type="text"
             value={username}
             placeholder="username"
-            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            className="w-full h-10 outline-none text-center flex relative z-4 bg-gray-200"
             onChange={(e) => setUsername(e.target.value)}
           />
 
@@ -63,7 +63,7 @@ function Register() {
             type="password"
             value={password}
             placeholder="password"
-            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            className="w-full h-10 outline-none text-center flex relative z-4 bg-gray-200"
             onChange={(e) => setPassword(e.target.value)}
           />
 
@@ -72,7 +72,7 @@ function Register() {
             type="text"
             value={firstname}
             placeholder="firstname"
-            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            className="w-full h-10 outline-none text-center flex relative z-4 bg-gray-200"
             onChange={(e) => setFirstname(e.target.value)}
           />
 
@@ -81,7 +81,7 @@ function Register() {
             type="text"
             value={lastname}
             placeholder="lastname"
-            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            className="w-full h-10 outline-none text-center flex relative z-4 bg-gray-200"
             onChange={(e) => setLastname(e.target.value)}
           />
 
@@ -90,7 +90,7 @@ function Register() {
             type="text"
             value={address}
             placeholder="address"
-            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            className="w-full h-10 outline-none text-center flex relative z-4 bg-gray-200"
             onChange={(e) => setAddress(e.target.value)}
           />
 

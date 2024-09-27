@@ -35,7 +35,7 @@ function Order({ product }) {
     }
   }, [product]);
   return (
-    <div className="w-full lg:w-60 h-fit p-4 bg-white flex flex-col items-center rounded-2xl gap-4">
+    <div className="w-full lg:w-60 h-fit p-4 bg-white drop-shadow-xl flex flex-col items-center rounded-2xl gap-4">
       <p className="w-full text-center p-2 bg-blue-gray-50 rounded-2xl">
         Your Order
       </p>

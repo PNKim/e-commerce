@@ -3,17 +3,15 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Pagination from "./Paganation";
-import { DebounceInput } from "react-debounce-input";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../redux/productSlice";
 
 function MainHomePage() {
-  const [searchProduct, setSearchProduct] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [productPerPage] = useState(8);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.product);
+  const { products, searchProduct } = useSelector((state) => state.product);
 
   const getData = async () => {
     const data = await axios.get(
@@ -35,46 +33,41 @@ function MainHomePage() {
   }, [searchProduct]);
 
   return (
-    <main className="w-[80%] my-5 flex flex-col items-center gap-20 z-1">
-      <div className="flex items-center gap-5">
-        <label htmlFor="product">search</label>
-        <DebounceInput
-          type="text"
-          debounceTimeout={300}
-          placeholder="name product"
-          className="my-5 bg-white text-black"
-          value={searchProduct}
-          onChange={(e) => {
-            setSearchProduct(e.target.value);
-          }}
-        />
-      </div>
-      <div className="w-full flex justify-center flex-wrap gap-28">
-        {product.map((product, index) => {
-          return (
-            <button
-              className="p-2 w-full max-w-72 btn h-fit bg-blue-gray-200 text-black text-lg hover:bg-blue-gray-300 border-none flex flex-col"
-              key={index}
-              onClick={() => {
-                navigate(`/product/${product.product_id}/${product.name}`);
-              }}
-            >
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-56 h-56"
-              />
-              <div className="w-full flex justify-evenly items-center">
-                <p className="flex-1">
-                  {product.name.length > 10
-                    ? product.name.slice(0, 10) + "..."
-                    : product.name}
-                </p>
-                <p className="flex-1">THB {product.price}</p>
-              </div>
-            </button>
-          );
-        })}
+    <main className="w-[80%] my-20 flex flex-col items-center gap-10 z-1">
+      <div className="w-full flex justify-center flex-wrap gap-y-20 gap-x-20">
+        {product[0] ? (
+          <>
+            {product.map((product, index) => {
+              return (
+                <button
+                  className="max-w-60 bg-blue-gray-200 text-black text-lg hover:bg-blue-gray-300 flex flex-col drop-shadow-xl rounded-2xl"
+                  key={index}
+                  onClick={() => {
+                    navigate(`/product/${product.product_id}/${product.name}`);
+                  }}
+                >
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-60 h-56 rounded-t-2xl"
+                  />
+                  <div className="w-full p-2 flex justify-evenly items-center">
+                    <p className="flex-1">
+                      {product.name.length > 10
+                        ? product.name.slice(0, 10) + "..."
+                        : product.name}
+                    </p>
+                    <p className="flex-1">THB {product.price}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </>
+        ) : (
+          <>
+            <span className="loading loading-dots loading-lg fixed top-52"></span>
+          </>
+        )}
       </div>
       <Pagination
         getProduct={products}

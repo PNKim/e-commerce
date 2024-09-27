@@ -30,12 +30,12 @@ function LoginPage() {
   };
 
   return (
-    <div className="w-full h-screen p-5 flex flex-col justify-center items-center absolute z-20">
+    <div className="w-full h-screen p-5 flex flex-col justify-center items-center bg-black bg-opacity-50 absolute z-50">
       {seenRegister ? <Register /> : null}
-      <span className="sm:w-[40%] md:w-[30%] lg:w-[20%] min-w-[300px] h-fit p-10 bg-white rounded-3xl flex flex-col gap-10 items-center absolute z-3">
+      <span className="sm:w-[25%] min-w-[300px] h-fit p-10 bg-white rounded-3xl flex flex-col gap-10 items-center absolute z-3">
         <h1 className="text-xl relative z-4">Login</h1>
         <form
-          className="w-full flex flex-col gap-10"
+          className="w-full flex flex-col gap-6"
           onSubmit={(e) => {
             e.preventDefault();
             const data = { username, password };
@@ -46,7 +46,7 @@ function LoginPage() {
             type="text"
             value={username}
             placeholder="username"
-            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            className="w-full h-10 outline-none text-center flex relative z-4 bg-gray-200"
             onChange={(e) => setUsername(e.target.value)}
           />
 
@@ -54,18 +54,18 @@ function LoginPage() {
             type="password"
             value={password}
             placeholder="password"
-            className="w-full h-10 text-center flex relative z-4 bg-gray-200"
+            className="w-full h-10 outline-none text-center flex relative z-4 bg-gray-200"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div className="w-full text-center flex flex-col justify-center gap-5">
+          <div className="w-full text-center flex justify-center gap-5">
             <button
-              className="w-full text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
+              className="flex-1 text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
               type="submit"
             >
               Login
             </button>
             <button
-              className="w-full text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
+              className="flex-1 text-xl btn btn-outline bg-blue-gray-600 text-white relative text-center z-4"
               type="button"
               onClick={() => {
                 dispatch(buttonRegister());
